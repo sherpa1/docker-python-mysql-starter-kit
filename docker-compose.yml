@@ -1,0 +1,39 @@
+version: '3.9'
+
+services:
+  app:
+    build: ./app
+    volumes:
+      - ./app:/code/app
+    ports:
+      - 5001:5000
+    env_file:
+      - ./.env
+    depends_on: 
+      db:
+        condition: service_healthy
+    links: 
+      - db
+    networks:
+     - ntwrk
+  db:
+    image: mariadb
+    ports:
+      - 3306:3306
+    env_file:
+      - ./.env
+    volumes:
+      - ./db/data:/var/lib/mysql
+      - ./db/sql:/docker-entrypoint-initdb.d
+
+    networks:
+     - ntwrk
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost", "-u${MARIADB_USER}", "-p${MARIADB_PASSWORD}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+networks:
+  ntwrk:
+    driver: bridge
