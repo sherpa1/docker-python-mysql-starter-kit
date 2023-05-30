@@ -13,10 +13,6 @@
 ## Suppression du volume local de base de données
 - `rm -rf db/data`
 
-## TODO
-
-A améliorer / corriger : au premier lancement des services, l'application Python ne parvient pas à se connecter à la base de données. Il faut relancer les services pour que la connexion s'effectue (cf. https://www.datanovia.com/en/lessons/docker-compose-wait-for-container-using-wait-tool/docker-compose-wait-for-mysql-container-to-be-ready/)
-
 --
 
 <img src="https://sherpa.one/images/sherpa-logotype.png" width="120px">

@@ -25,14 +25,14 @@ services:
     volumes:
       - ./db/data:/var/lib/mysql
       - ./db/sql:/docker-entrypoint-initdb.d
-
+    restart: unless-stopped
     networks:
      - ntwrk
     healthcheck:
-      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost", "-u${MARIADB_USER}", "-p${MARIADB_PASSWORD}"]
-      interval: 5s
-      timeout: 5s
-      retries: 20
+      test: "/usr/bin/mysql --user=${MARIADB_USER} --password=${MARIADB_PASSWORD} --execute \"SHOW DATABASES;\""
+      interval: 3s
+      timeout: 1s
+      retries: 5
 
 networks:
   ntwrk:
